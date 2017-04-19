@@ -1,7 +1,5 @@
 # ABC Codec
 
-
-
 ## Using
 Add repository to your POM:
 

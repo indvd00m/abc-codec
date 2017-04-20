@@ -37,6 +37,9 @@ https://github.com/indvd00m/abc-codec/releases
 - Decode optimizations.
 - Add exceptions throwing.
 
+### Version 1.1.1
+- Fix building under jdk6.
+
 ## Roadmap
 
 This component is developed as a hobby with no public roadmap or any guarantees of upcoming releases. That said, the following features are planned for upcoming releases:

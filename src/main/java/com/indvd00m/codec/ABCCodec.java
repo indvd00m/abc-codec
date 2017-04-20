@@ -86,16 +86,16 @@ public class ABCCodec {
 			if (c != escapeSymbol && charsPosition.containsKey(c)) {
 				sb.append(c);
 			} else {
-				String encodedChar = source.substring(i + 1, i + 1 + maxEncodedCharLength);
-				i += maxEncodedCharLength;
 				int decodedValue = 0;
-				for (int j = encodedChar.length() - 1; j >= 0; j--) {
-					char e = encodedChar.charAt(j);
+				int encodedCharEndIndex = i + maxEncodedCharLength;
+				for (int j = encodedCharEndIndex; j > i; j--) {
+					char e = source.charAt(j);
 					int index = charsPosition.get(e);
-					decodedValue += index * pow(base, encodedChar.length() - j - 1);
+					decodedValue += index * pow(base, encodedCharEndIndex - j);
 				}
 				char decodedChar = (char) decodedValue;
 				sb.append(decodedChar);
+				i += maxEncodedCharLength;
 			}
 		}
 

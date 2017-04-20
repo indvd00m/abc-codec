@@ -16,7 +16,7 @@ Add dependency to your maven project:
 	<dependency>
 		<groupId>com.indvd00m.codec</groupId>
 		<artifactId>abc-codec</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.1</version>
 	</dependency>
 ```
 

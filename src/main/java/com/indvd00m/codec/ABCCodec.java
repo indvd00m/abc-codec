@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.indvd00m.codec.exception.ABCDecodeException;
+import com.indvd00m.codec.exception.ABCEncodeException;
+
 /**
  * @author indvd00m (gotoindvdum[at]gmail[dot]com)
  * @date 2017-Apr-19 6:59:50 PM
@@ -52,54 +55,66 @@ public class ABCCodec {
 		maxEncodedCharLength = Integer.toString(Character.MAX_VALUE, base).length();
 	}
 
-	public String encode(String source) {
-		StringBuilder sb = new StringBuilder(source.length());
+	public String encode(String source) throws ABCEncodeException {
+		try {
 
-		for (int i = 0; i < source.length(); i++) {
-			char c = source.charAt(i);
-			if (c != escapeSymbol && charsPosition.containsKey(c)) {
-				sb.append(c);
-			} else {
-				sb.append(escapeSymbol);
-				String encodedChar = Integer.toString(c, base);
-				int prefixLength = maxEncodedCharLength - encodedChar.length();
-				for (int j = 0; j < prefixLength; j++) {
-					sb.append(abc[0]);
-				}
-				for (int j = 0; j < encodedChar.length(); j++) {
-					char e = encodedChar.charAt(j);
-					int abcIndex = Integer.parseInt(e + "", base);
-					char value = abc[abcIndex];
-					sb.append(value);
+			StringBuilder sb = new StringBuilder(source.length());
+
+			for (int i = 0; i < source.length(); i++) {
+				char c = source.charAt(i);
+				if (c != escapeSymbol && charsPosition.containsKey(c)) {
+					sb.append(c);
+				} else {
+					sb.append(escapeSymbol);
+					String encodedChar = Integer.toString(c, base);
+					int prefixLength = maxEncodedCharLength - encodedChar.length();
+					for (int j = 0; j < prefixLength; j++) {
+						sb.append(abc[0]);
+					}
+					for (int j = 0; j < encodedChar.length(); j++) {
+						char e = encodedChar.charAt(j);
+						int abcIndex = Integer.parseInt(e + "", base);
+						char value = abc[abcIndex];
+						sb.append(value);
+					}
 				}
 			}
-		}
 
-		return sb.toString();
+			return sb.toString();
+
+		} catch (RuntimeException e) {
+			throw new ABCEncodeException(e);
+		}
 	}
 
-	public String decode(String source) {
-		StringBuilder sb = new StringBuilder(source.length());
+	public String decode(String source) throws ABCDecodeException {
+		try {
 
-		for (int i = 0; i < source.length(); i++) {
-			char c = source.charAt(i);
-			if (c != escapeSymbol && charsPosition.containsKey(c)) {
-				sb.append(c);
-			} else {
-				int decodedValue = 0;
-				int encodedCharEndIndex = i + maxEncodedCharLength;
-				for (int j = encodedCharEndIndex; j > i; j--) {
-					char e = source.charAt(j);
-					int index = charsPosition.get(e);
-					decodedValue += index * pow(base, encodedCharEndIndex - j);
+			StringBuilder sb = new StringBuilder(source.length());
+
+			for (int i = 0; i < source.length(); i++) {
+				char c = source.charAt(i);
+				if (c != escapeSymbol && charsPosition.containsKey(c)) {
+					sb.append(c);
+				} else {
+					int decodedValue = 0;
+					int encodedCharEndIndex = i + maxEncodedCharLength;
+					for (int j = encodedCharEndIndex; j > i; j--) {
+						char e = source.charAt(j);
+						int index = charsPosition.get(e);
+						decodedValue += index * pow(base, encodedCharEndIndex - j);
+					}
+					char decodedChar = (char) decodedValue;
+					sb.append(decodedChar);
+					i += maxEncodedCharLength;
 				}
-				char decodedChar = (char) decodedValue;
-				sb.append(decodedChar);
-				i += maxEncodedCharLength;
 			}
-		}
 
-		return sb.toString();
+			return sb.toString();
+
+		} catch (RuntimeException e) {
+			throw new ABCDecodeException(e);
+		}
 	}
 
 	protected int pow(int a, int b) {

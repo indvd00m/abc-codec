@@ -6,7 +6,7 @@
 	<groupId>com.indvd00m.codec</groupId>
 	<artifactId>abc-codec</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<name>abc-codec</name>
 
 	<licenses>

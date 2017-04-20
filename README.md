@@ -16,7 +16,7 @@ Add dependency to your maven project:
 	<dependency>
 		<groupId>com.indvd00m.codec</groupId>
 		<artifactId>abc-codec</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</dependency>
 ```
 
@@ -32,6 +32,10 @@ https://github.com/indvd00m/abc-codec/releases
 
 ### Version 1.0.0
 - First release.
+
+### Version 1.1.0
+- Decode optimizations.
+- Add exceptions throwing.
 
 ## Roadmap
 

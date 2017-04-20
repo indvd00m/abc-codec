@@ -25,8 +25,4 @@ public class ABCEncodeException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public ABCEncodeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
-
 }
